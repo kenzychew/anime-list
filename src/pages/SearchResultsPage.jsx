@@ -9,6 +9,7 @@ const SearchResultsPage = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [watchlist, setWatchlist] = useState([]);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -29,21 +30,26 @@ const SearchResultsPage = () => {
     };
 
     fetchResults();
+    // Load watchlist from localStorage
+    const savedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    setWatchlist(savedWatchlist);
   }, [query]);
 
-  const handleAddToWatchlist = (anime) => {
-    // Get existing watchlist from localStorage
-    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+  const isInWatchlist = (animeId) => {
+    return watchlist.some(item => item.mal_id === animeId);
+  };
+
+  const handleWatchlistToggle = (anime) => {
+    const updatedWatchlist = isInWatchlist(anime.mal_id)
+      ? watchlist.filter(item => item.mal_id !== anime.mal_id)
+      : [...watchlist, anime];
     
-    // Check if anime is already in watchlist
-    if (!watchlist.some(item => item.mal_id === anime.mal_id)) {
-      // Add anime to watchlist
-      const updatedWatchlist = [...watchlist, anime];
-      localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
-      alert('Added to watchlist!');
-    } else {
-      alert('Already in watchlist!');
-    }
+    setWatchlist(updatedWatchlist);
+    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+    
+    alert(isInWatchlist(anime.mal_id) 
+      ? 'Removed from watchlist!' 
+      : 'Added to watchlist!');
   };
 
   return (
@@ -71,10 +77,10 @@ const SearchResultsPage = () => {
                 </Link>
                 <p className="anime-info">{anime.type} • {anime.episodes} episodes</p>
                 <button 
-                  onClick={() => handleAddToWatchlist(anime)}
-                  className="watchlist-button"
+                  onClick={() => handleWatchlistToggle(anime)}
+                  className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`}
                 >
-                  Add to Watchlist
+                  {isInWatchlist(anime.mal_id) ? 'Remove from Watchlist' : 'Add to Watchlist'}
                 </button>
               </div>
             ))}

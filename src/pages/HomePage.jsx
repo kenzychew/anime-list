@@ -6,12 +6,13 @@ const HomePage = () => {
   const [topAnime, setTopAnime] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [watchlist, setWatchlist] = useState([]);
 
   useEffect(() => {
     const fetchTopAnime = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=airing');
+        const response = await fetch('https://api.jikan.moe/v4/top/anime');
         const data = await response.json();
         setTopAnime(data.data);
       } catch (err) {
@@ -22,18 +23,26 @@ const HomePage = () => {
     };
 
     fetchTopAnime();
+    // Load watchlist from localStorage
+    const savedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    setWatchlist(savedWatchlist);
   }, []);
 
-  const handleAddToWatchlist = (anime) => {
-    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+  const isInWatchlist = (animeId) => {
+    return watchlist.some(item => item.mal_id === animeId);
+  };
+
+  const handleWatchlistToggle = (anime) => {
+    const updatedWatchlist = isInWatchlist(anime.mal_id)
+      ? watchlist.filter(item => item.mal_id !== anime.mal_id)
+      : [...watchlist, anime];
     
-    if (!watchlist.some(item => item.mal_id === anime.mal_id)) {
-      const updatedWatchlist = [...watchlist, anime];
-      localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
-      alert('Added to watchlist!');
-    } else {
-      alert('Already in watchlist!');
-    }
+    setWatchlist(updatedWatchlist);
+    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+    
+    alert(isInWatchlist(anime.mal_id) 
+      ? 'Removed from watchlist!' 
+      : 'Added to watchlist!');
   };
 
   if (loading) return <div className="loading">Loading...</div>;
@@ -42,7 +51,7 @@ const HomePage = () => {
   return (
     <div className="search-page">
       <h1 className="search-title">
-        Top Airing Anime
+        Top Anime
       </h1>
       <div className="search-results">
         {topAnime.map((anime) => (
@@ -59,10 +68,10 @@ const HomePage = () => {
               <span>Score: {anime.score}</span> • <span>Rank #{anime.rank}</span>
             </div>
             <button 
-              onClick={() => handleAddToWatchlist(anime)}
-              className="watchlist-button"
+              onClick={() => handleWatchlistToggle(anime)}
+              className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`}
             >
-              Add to Watchlist
+              {isInWatchlist(anime.mal_id) ? 'Remove from Watchlist' : 'Add to Watchlist'}
             </button>
           </div>
         ))}
