@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/SearchResults.css'; // Reusing the same styles
 
 const HomePage = () => {
   const [topAnime, setTopAnime] = useState([]);
@@ -23,35 +24,46 @@ const HomePage = () => {
     fetchTopAnime();
   }, []);
 
-  if (loading) return <div className="text-center py-8">Loading...</div>;
-  if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
+  const handleAddToWatchlist = (anime) => {
+    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    
+    if (!watchlist.some(item => item.mal_id === anime.mal_id)) {
+      const updatedWatchlist = [...watchlist, anime];
+      localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+      alert('Added to watchlist!');
+    } else {
+      alert('Already in watchlist!');
+    }
+  };
+
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">
+    <div className="search-page">
+      <h1 className="search-title">
         Top Airing Anime
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="search-results">
         {topAnime.map((anime) => (
-          <div
-            key={anime.mal_id}
-            className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
-          >
+          <div key={anime.mal_id} className="anime-card">
             <img
               src={anime.images.jpg.image_url}
               alt={anime.title}
-              className="w-full h-64 object-cover rounded-md"
+              className="anime-image"
             />
-            <Link 
-              to={`/anime/${anime.mal_id}`}
-              className="block mt-2 hover:text-blue-600"
-            >
-              <h3 className="text-xl font-semibold">{anime.title}</h3>
+            <Link to={`/anime/${anime.mal_id}`} className="anime-title">
+              <h3>{anime.title}</h3>
             </Link>
-            <div className="flex justify-between items-center mt-1 text-gray-600">
-              <span>Score: {anime.score}</span>
-              <span>Rank #{anime.rank}</span>
+            <div className="anime-info">
+              <span>Score: {anime.score}</span> • <span>Rank #{anime.rank}</span>
             </div>
+            <button 
+              onClick={() => handleAddToWatchlist(anime)}
+              className="watchlist-button"
+            >
+              Add to Watchlist
+            </button>
           </div>
         ))}
       </div>
