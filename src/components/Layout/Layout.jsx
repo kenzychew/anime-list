@@ -1,10 +1,11 @@
 import Navbar from './Navbar';
+import '../../styles/Layout.css';
 
 const Layout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="layout">
       <Navbar />
-      <main className="flex-grow">
+      <main className="layout-main">
         {children}
       </main>
     </div>
