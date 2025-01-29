@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/SearchBar.css';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,18 +14,18 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto">
-      <div className="relative flex items-center">
+    <form onSubmit={handleSubmit} className="search-form">
+      <div className="search-container">
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search for anime..."
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+          className="search-input"
         />
         <button
           type="submit"
-          className="absolute right-2 px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="search-button"
         >
           Search
         </button>

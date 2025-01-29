@@ -1,10 +1,10 @@
 .layout {
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: 100dvw;
   display: flex;
   flex-direction: column;
 }
 
 .layout-main {
   flex-grow: 1;
-} 
+}
