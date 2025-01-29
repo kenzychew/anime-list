@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/AnimeDetail.css';
 
 const AnimeDetailPage = () => {
   const { id } = useParams();
@@ -24,65 +25,80 @@ const AnimeDetailPage = () => {
     fetchAnimeDetails();
   }, [id]);
 
-  if (loading) return <div className="text-center py-8">Loading...</div>;
-  if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
-  if (!anime) return <div className="text-center py-8">Anime not found</div>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (!anime) return <div className="empty-message">Anime not found</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="md:flex">
-          <div className="md:w-1/3">
+    <div className="anime-detail">
+      <div className="detail-card">
+        <div className="detail-content">
+          <div className="detail-image-container">
             <img
               src={anime.images.jpg.large_image_url}
               alt={anime.title}
-              className="w-full h-auto"
+              className="detail-image"
             />
           </div>
-          <div className="md:w-2/3 p-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">{anime.title}</h1>
+          <div className="detail-info">
+            <h1 className="detail-title">{anime.title}</h1>
             {anime.title_english && anime.title_english !== anime.title && (
-              <h2 className="text-xl text-gray-600 mb-4">{anime.title_english}</h2>
+              <h2 className="detail-english-title">{anime.title_english}</h2>
             )}
             
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div>
-                <p className="text-gray-600"><span className="font-semibold">Score:</span> {anime.score}</p>
-                <p className="text-gray-600"><span className="font-semibold">Rank:</span> #{anime.rank}</p>
-                <p className="text-gray-600"><span className="font-semibold">Popularity:</span> #{anime.popularity}</p>
+            <div className="detail-stats">
+              <div className="detail-stat">
+                <span className="detail-stat-label">Score:</span> {anime.score}
               </div>
-              <div>
-                <p className="text-gray-600"><span className="font-semibold">Status:</span> {anime.status}</p>
-                <p className="text-gray-600"><span className="font-semibold">Episodes:</span> {anime.episodes}</p>
-                <p className="text-gray-600"><span className="font-semibold">Duration:</span> {anime.duration}</p>
+              <div className="detail-stat">
+                <span className="detail-stat-label">Rank:</span> #{anime.rank}
+              </div>
+              <div className="detail-stat">
+                <span className="detail-stat-label">Popularity:</span> #{anime.popularity}
+              </div>
+              <div className="detail-stat">
+                <span className="detail-stat-label">Status:</span> {anime.status}
+              </div>
+              <div className="detail-stat">
+                <span className="detail-stat-label">Episodes:</span> {anime.episodes}
+              </div>
+              <div className="detail-stat">
+                <span className="detail-stat-label">Duration:</span> {anime.duration}
               </div>
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-2">Synopsis</h3>
-              <p className="text-gray-600">{anime.synopsis}</p>
+            <div className="detail-section">
+              <h3 className="detail-section-title">Synopsis</h3>
+              <p className="detail-synopsis">{anime.synopsis}</p>
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-2">Information</h3>
-              <p className="text-gray-600"><span className="font-semibold">Type:</span> {anime.type}</p>
-              <p className="text-gray-600"><span className="font-semibold">Aired:</span> {anime.aired.string}</p>
-              <p className="text-gray-600"><span className="font-semibold">Rating:</span> {anime.rating}</p>
-              <p className="text-gray-600">
-                <span className="font-semibold">Genres:</span>{' '}
-                {anime.genres.map(genre => genre.name).join(', ')}
-              </p>
+            <div className="detail-section">
+              <h3 className="detail-section-title">Information</h3>
+              <div className="detail-info-grid">
+                <div className="detail-stat">
+                  <span className="detail-stat-label">Type:</span> {anime.type}
+                </div>
+                <div className="detail-stat">
+                  <span className="detail-stat-label">Aired:</span> {anime.aired.string}
+                </div>
+                <div className="detail-stat">
+                  <span className="detail-stat-label">Rating:</span> {anime.rating}
+                </div>
+                <div className="detail-stat">
+                  <span className="detail-stat-label">Genres:</span>{' '}
+                  {anime.genres.map(genre => genre.name).join(', ')}
+                </div>
+              </div>
             </div>
 
             {anime.trailer.embed_url && (
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Trailer</h3>
-                <div className="aspect-w-16 aspect-h-9">
+              <div className="detail-section">
+                <h3 className="detail-section-title">Trailer</h3>
+                <div className="detail-trailer">
                   <iframe
                     src={anime.trailer.embed_url}
                     title="Trailer"
                     allowFullScreen
-                    className="w-full h-64 rounded-lg"
                   ></iframe>
                 </div>
               </div>
