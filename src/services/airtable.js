@@ -81,18 +81,16 @@ const fetchWatchlist = async () => {
     }
 
     const data = await response.json();
-    return data.records
-      .filter(record => record.fields.mal_id)
-      .map(record => ({
-        ...record.fields,
-        airtableId: record.id,
-        mal_id: parseInt(record.fields.mal_id),
-        images: {
-          jpg: {
-            image_url: record.fields.image_url
-          }
+    return data.records.map(record => ({
+      ...record.fields,
+      airtableId: record.id,
+      mal_id: parseInt(record.fields.mal_id),
+      images: {
+        jpg: {
+          image_url: record.fields.image_url
         }
-      }));
+      }
+    }));
   } catch (error) {
     console.error('Error fetching watchlist:', error);
     throw error;
