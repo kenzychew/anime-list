@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import SearchBar from '../components/Layout/SearchBar';
+import Toast from '../components/Toast/Toast';
 import '../styles/SearchResults.css';
 
 const SearchResultsPage = () => {
@@ -10,6 +11,7 @@ const SearchResultsPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [watchlist, setWatchlist] = useState([]);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -47,9 +49,9 @@ const SearchResultsPage = () => {
     setWatchlist(updatedWatchlist);
     localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
     
-    alert(isInWatchlist(anime.mal_id) 
-      ? 'Removed from watchlist!' 
-      : 'Added to watchlist!');
+    setToast(isInWatchlist(anime.mal_id) 
+      ? 'Removed from Watchlist' 
+      : 'Added to Watchlist');
   };
 
   return (
@@ -93,6 +95,7 @@ const SearchResultsPage = () => {
           Enter a search term to find anime
         </div>
       )}
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
 };

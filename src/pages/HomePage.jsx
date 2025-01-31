@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Toast from '../components/Toast/Toast';
 import '../styles/SearchResults.css'; // Reusing the same styles
 
 const HomePage = () => {
@@ -7,6 +8,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [watchlist, setWatchlist] = useState([]);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const fetchTopAnime = async () => {
@@ -40,9 +42,9 @@ const HomePage = () => {
     setWatchlist(updatedWatchlist);
     localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
     
-    alert(isInWatchlist(anime.mal_id) 
-      ? 'Removed from watchlist!' 
-      : 'Added to watchlist!');
+    setToast(isInWatchlist(anime.mal_id) 
+      ? 'Removed from Watchlist' 
+      : 'Added to Watchlist');
   };
 
   if (loading) return <div className="loading">Loading...</div>;
@@ -76,6 +78,7 @@ const HomePage = () => {
           </div>
         ))}
       </div>
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
 };

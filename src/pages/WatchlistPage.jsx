@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Toast from '../components/Toast/Toast';
 import '../styles/SearchResults.css';
 
 const WatchlistPage = () => {
   const [watchlist, setWatchlist] = useState([]);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const savedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
@@ -14,7 +16,7 @@ const WatchlistPage = () => {
     const updatedWatchlist = watchlist.filter(anime => anime.mal_id !== animeId);
     setWatchlist(updatedWatchlist);
     localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
-    alert('Removed from watchlist!');
+    setToast('Removed from Watchlist');
   };
 
   return (
@@ -51,6 +53,7 @@ const WatchlistPage = () => {
           ))}
         </div>
       )}
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
 };
