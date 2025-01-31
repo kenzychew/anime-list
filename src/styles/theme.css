@@ -1,0 +1,30 @@
+/* CSS variables for theme colors */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #2563eb;
+  --bg-accent: #3b82f6;
+  --bg-accent-hover: #2563eb;
+  --text-primary: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #ddd;
+  --card-text: #333;
+  --card-text-secondary: #666;
+}
+
+:root.dark-mode {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d3748;
+  --bg-accent: #4a5568;
+  --bg-accent-hover: #2d3748;
+  --text-primary: #ffffff;
+  --card-bg: #2d3748;
+  --card-border: #4a5568;
+  --card-text: #ffffff;
+  --card-text-secondary: #cbd5e0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--card-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+} 
