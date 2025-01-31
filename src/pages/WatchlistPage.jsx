@@ -1,38 +1,35 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Toast from '../components/Toast/Toast';
+import { useWatchlist } from '../hooks/useWatchlist';
 import '../styles/SearchResults.css';
 
 const WatchlistPage = () => {
-  const [watchlist, setWatchlist] = useState([]);
-  const [toast, setToast] = useState(null);
+  const { watchlist, loading, error, handleWatchlistToggle, toast, setToast } = useWatchlist();
 
-  useEffect(() => {
-    const savedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
-    setWatchlist(savedWatchlist);
-  }, []);
+  if (loading) return <div className="loading">Loading watchlist...</div>;
+  if (error) return <div className="error">{error}</div>;
 
-  const handleRemoveFromWatchlist = (animeId) => {
-    const updatedWatchlist = watchlist.filter(anime => anime.mal_id !== animeId);
-    setWatchlist(updatedWatchlist);
-    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
-    setToast('Removed from Watchlist');
-  };
+  // Filter out any invalid entries
+  const validWatchlist = watchlist.filter(anime => 
+    anime && 
+    typeof anime.mal_id === 'number' && 
+    !isNaN(anime.mal_id)
+  );
 
   return (
     <div className="search-page">
       <h1 className="search-title">My Watchlist</h1>
       
-      {watchlist.length === 0 ? (
+      {validWatchlist.length === 0 ? (
         <div className="empty-message">
           Your watchlist is empty. Add some anime from the home page or search!
         </div>
       ) : (
         <div className="search-results">
-          {watchlist.map((anime) => (
+          {validWatchlist.map((anime) => (
             <div key={anime.mal_id} className="anime-card">
               <img
-                src={anime.images.jpg.image_url}
+                src={anime.image_url}
                 alt={anime.title}
                 className="anime-image"
               />
@@ -44,7 +41,7 @@ const WatchlistPage = () => {
                 {anime.episodes && <span> • {anime.episodes} episodes</span>}
               </div>
               <button 
-                onClick={() => handleRemoveFromWatchlist(anime.mal_id)}
+                onClick={() => handleWatchlistToggle(anime)}
                 className="watchlist-button remove"
               >
                 Remove from Watchlist
