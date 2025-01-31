@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Toast from '../components/Toast/Toast';
+import { useWatchlist } from '../hooks/useWatchlist';
 import '../styles/SearchResults.css'; // Reusing the same styles
 
 const HomePage = () => {
   const [topAnime, setTopAnime] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [watchlist, setWatchlist] = useState([]);
-  const [toast, setToast] = useState(null);
+  const { watchlist, isInWatchlist, handleWatchlistToggle, toast, setToast } = useWatchlist();
 
   useEffect(() => {
     const fetchTopAnime = async () => {
@@ -25,27 +25,7 @@ const HomePage = () => {
     };
 
     fetchTopAnime();
-    // Load watchlist from localStorage
-    const savedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
-    setWatchlist(savedWatchlist);
   }, []);
-
-  const isInWatchlist = (animeId) => {
-    return watchlist.some(item => item.mal_id === animeId);
-  };
-
-  const handleWatchlistToggle = (anime) => {
-    const updatedWatchlist = isInWatchlist(anime.mal_id)
-      ? watchlist.filter(item => item.mal_id !== anime.mal_id)
-      : [...watchlist, anime];
-    
-    setWatchlist(updatedWatchlist);
-    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
-    
-    setToast(isInWatchlist(anime.mal_id) 
-      ? 'Removed from Watchlist' 
-      : 'Added to Watchlist');
-  };
 
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;

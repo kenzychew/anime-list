@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import SearchBar from '../components/Layout/SearchBar';
 import Toast from '../components/Toast/Toast';
+import { useWatchlist } from '../hooks/useWatchlist';
 import '../styles/SearchResults.css';
 
 const SearchResultsPage = () => {
@@ -10,8 +11,7 @@ const SearchResultsPage = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [watchlist, setWatchlist] = useState([]);
-  const [toast, setToast] = useState(null);
+  const { isInWatchlist, handleWatchlistToggle, toast, setToast } = useWatchlist();
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -32,27 +32,7 @@ const SearchResultsPage = () => {
     };
 
     fetchResults();
-    // Load watchlist from localStorage
-    const savedWatchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
-    setWatchlist(savedWatchlist);
   }, [query]);
-
-  const isInWatchlist = (animeId) => {
-    return watchlist.some(item => item.mal_id === animeId);
-  };
-
-  const handleWatchlistToggle = (anime) => {
-    const updatedWatchlist = isInWatchlist(anime.mal_id)
-      ? watchlist.filter(item => item.mal_id !== anime.mal_id)
-      : [...watchlist, anime];
-    
-    setWatchlist(updatedWatchlist);
-    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
-    
-    setToast(isInWatchlist(anime.mal_id) 
-      ? 'Removed from Watchlist' 
-      : 'Added to Watchlist');
-  };
 
   return (
     <div className="search-page">
