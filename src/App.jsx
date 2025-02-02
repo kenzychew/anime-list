@@ -5,7 +5,6 @@ import HomePage from "./pages/HomePage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import AnimeDetailPage from "./pages/AnimeDetailPage";
 import WatchlistPage from "./pages/WatchlistPage";
-import NotFoundPage from "./pages/NotFoundPage";
 // src/App.jsx
 
 const App = () => {
@@ -17,7 +16,6 @@ const App = () => {
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="anime/:id" element={<AnimeDetailPage />} />
           <Route path="watchlist" element={<WatchlistPage />} />
-          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </ThemeProvider>

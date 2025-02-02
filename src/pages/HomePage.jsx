@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Toast from '../components/Toast/Toast';
+import AnimeCard from '../components/AnimeCard/AnimeCard';
 import { useWatchlist } from '../hooks/useWatchlist';
-import '../styles/SearchResults.css'; // Reusing the same styles
+import '../styles/SearchResults.css';
 
 const HomePage = () => {
-  // State management for anime data and loading states
-  const [results, setResults] = useState([]); // Tracks list of top anime
+  // Initialize state variables using useState hook
+  const [results, setResults] = useState([]); // Stores list of top anime
   const [loading, setLoading] = useState(true); // Manages loading state
   const [error, setError] = useState(null); // Handles potential errors
   
-  // Custom hook for watchlist functionality
-  const { isInWatchlist, handleWatchlistToggle, toast, setToast } = useWatchlist();
+  // Custom hook for toast notifications when adding or removing anime from watchlist
+  const { toast, setToast } = useWatchlist();
 
   // Fetch top anime data when component mounts
   useEffect(() => {
@@ -32,6 +32,10 @@ const HomePage = () => {
     fetchTopAnime();
   }, []); // Empty dependency array ensures this runs only once
 
+  const handleWatchlistUpdate = (action) => {
+    setToast(action === 'add' ? 'Added to Watchlist' : 'Removed from Watchlist');
+  };
+
   // Loading and error states
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
@@ -44,30 +48,11 @@ const HomePage = () => {
       {/* Grid layout for anime cards */}
       <div className="search-results">
         {results.map((anime) => (
-          <div key={anime.mal_id} className="anime-card">
-            <img
-              src={anime.images.jpg.image_url}
-              alt={anime.title || 'Anime Image'}
-              className="anime-image"
-            />
-            {/* Link to detailed view */}
-            <Link to={`/anime/${anime.mal_id}`} className="anime-title">
-              <h3>{anime.title}</h3>
-            </Link>
-            <div className="anime-info">
-              <span>Score: {anime.score}</span> • <span>Popularity #{anime.popularity}</span>
-            </div>
-            <div className="anime-info">
-              <span>Rank #{anime.rank}</span> • <span>Favorites: {anime.favorites}</span>
-            </div>
-            {/* Watchlist toggle button */}
-            <button 
-              onClick={() => handleWatchlistToggle(anime)}
-              className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`}
-            >
-              {isInWatchlist(anime.mal_id) ? 'Remove from Watchlist' : 'Add to Watchlist'}
-            </button>
-          </div>
+          <AnimeCard 
+            key={anime.mal_id} 
+            anime={anime} 
+            onWatchlistUpdate={handleWatchlistUpdate}
+          />
         ))}
       </div>
       {/* Toast notification */}

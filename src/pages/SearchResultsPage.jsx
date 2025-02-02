@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
-import SearchBar from '../components/Layout/SearchBar';
+import { useSearchParams } from 'react-router-dom';
+import SearchBar from '../components/SearchBar/SearchBar';
 import Toast from '../components/Toast/Toast';
+import AnimeCard from '../components/AnimeCard/AnimeCard';
 import { useWatchlist } from '../hooks/useWatchlist';
 import '../styles/SearchResults.css';
 
@@ -15,7 +16,7 @@ const SearchResultsPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // Custom hook for managing watchlist functionality
-  const { isInWatchlist, handleWatchlistToggle, toast, setToast } = useWatchlist();
+  const { toast, setToast } = useWatchlist();
   // Effect hook to fetch search results when the query changes
   useEffect(() => {
     const fetchResults = async () => {
@@ -38,6 +39,10 @@ const SearchResultsPage = () => {
     fetchResults();
   }, [query]); // Re-run the fetch when the query changes
 
+  const handleWatchlistUpdate = (action) => {
+    setToast(action === 'add' ? 'Added to Watchlist' : 'Removed from Watchlist');
+  };
+
   return (
     <div className="search-page">
       {/* Search bar component for new searches */}
@@ -56,29 +61,11 @@ const SearchResultsPage = () => {
           <div className="search-results">
             {/* Map through the results and display each anime card */}
             {results.map((anime) => (
-              <div key={anime.mal_id} className="anime-card">
-                <img
-                  src={anime.images.jpg.image_url}
-                  alt={anime.title || 'Anime Image'}
-                  className="anime-image"
-                />
-                {/* Link to AnimeDetailPage component */}
-                <Link to={`/anime/${anime.mal_id}`} className="anime-title">
-                  <h3>{anime.title}</h3>
-                </Link>
-                <div className="anime-info">
-                  <span>Score: {anime.score}</span> • <span>Popularity #{anime.popularity}</span>
-                </div>
-                <div className="anime-info">
-                  <span>Rank #{anime.rank}</span> • <span>Favorites: {anime.favorites}</span>
-                </div>
-                <button 
-                  onClick={() => handleWatchlistToggle(anime)}
-                  className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`}
-                >
-                  {isInWatchlist(anime.mal_id) ? 'Remove from Watchlist' : 'Add to Watchlist'}
-                </button>
-              </div>
+              <AnimeCard 
+                key={anime.mal_id} 
+                anime={anime} 
+                onWatchlistUpdate={handleWatchlistUpdate}
+              />
             ))}
           </div>
         </>

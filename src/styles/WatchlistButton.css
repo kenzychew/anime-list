@@ -1,0 +1,23 @@
+.watchlist-button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+}
+
+.watchlist-button:hover {
+  background-color: #2563eb;
+}
+
+.watchlist-button.remove {
+  background-color: #ef4444;
+}
+
+.watchlist-button.remove:hover {
+  background-color: #dc2626;
+} 

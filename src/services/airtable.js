@@ -14,7 +14,8 @@ const createAnimeRecord = async (anime) => {
       episodes: Number(anime.episodes),
       image_url: anime.images.jpg.image_url,
       score: Number(anime.score),
-      rank: Number(anime.rank)
+      rank: Number(anime.rank),
+      popularity: Number(anime.popularity),
     };
 
     console.log('Sending fields to Airtable:', fields);

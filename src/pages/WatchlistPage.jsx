@@ -30,7 +30,7 @@ const WatchlistPage = () => {
             <div key={anime.mal_id} className="anime-card">
               <img
                 src={anime.image_url}
-                alt={anime.title}
+                alt={anime.title || `Anime Image`}
                 className="anime-image"
               />
               <Link to={`/anime/${anime.mal_id}`} className="anime-title">
