@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/HomePage";
 import SearchResultsPage from "./pages/SearchResultsPage";
@@ -9,15 +10,17 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/search" element={<SearchResultsPage />} />
-        <Route path="anime/:id" element={<AnimeDetailPage />} />
-        <Route path="watchlist" element={<WatchlistPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Layout>
+    <ThemeProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/search" element={<SearchResultsPage />} />
+          <Route path="anime/:id" element={<AnimeDetailPage />} />
+          <Route path="watchlist" element={<WatchlistPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </ThemeProvider>
   );
 };
 
