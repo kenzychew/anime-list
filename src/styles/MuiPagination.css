@@ -3,4 +3,22 @@
   margin-top: 1.5rem;
   display: flex;
   justify-content: center;
+}
+
+/* Dark mode styles */
+:root.dark-mode .MuiPaginationItem-root {
+  color: var(--card-text);
+}
+
+:root.dark-mode .MuiPaginationItem-root.Mui-selected {
+  background-color: var(--bg-accent);
+  color: var(--text-primary);
+}
+
+:root.dark-mode .MuiPaginationItem-root:hover:not(.Mui-selected) {
+  background-color: var(--card-border);
+}
+
+:root.dark-mode .MuiPaginationItem-root.Mui-disabled {
+  color: var(--card-text-secondary);
 } 
