@@ -36,10 +36,10 @@ const WatchlistPage = () => {
               <Link to={`/anime/${anime.mal_id}`} className="anime-title">
                 <h3>{anime.title}</h3>
               </Link>
-              <div className="anime-info">
+              {/* <div className="anime-info">
                 <span>Type: {anime.type}</span>
                 {anime.episodes && <span> • {anime.episodes} episodes</span>}
-              </div>
+              </div> */}
               <button 
                 onClick={() => handleWatchlistToggle(anime)}
                 className="watchlist-button remove"

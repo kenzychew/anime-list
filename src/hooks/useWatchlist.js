@@ -16,8 +16,8 @@ export const useWatchlist = () => {
       setLoading(true);
       const data = await fetchWatchlist();
       setWatchlist(data);
-    } catch (err) {
-      setError('Failed to load watchlist');
+    } catch (error) {
+      setError(`Failed to load watchlist: ${error.message}`);
     } finally {
       setLoading(false);
     }

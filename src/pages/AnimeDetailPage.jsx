@@ -15,8 +15,8 @@ const AnimeDetailPage = () => {
         const response = await fetch(`https://api.jikan.moe/v4/anime/${id}/full`);
         const data = await response.json();
         setAnime(data.data);
-      } catch (err) {
-        setError('Failed to fetch anime details. Please try again later.');
+      } catch (error) {
+        setError(`Failed to fetch anime details: ${error.message}`);
       } finally {
         setLoading(false);
       }

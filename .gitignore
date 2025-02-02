@@ -8,6 +8,12 @@ node_modules
 dist
 dist-ssr
 
+# Test and JSON folders
+/test
+/json
+test/
+json/
+
 # Logs
 logs
 *.log

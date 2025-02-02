@@ -20,12 +20,12 @@ const SearchResultsPage = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&sfw=true`
+          `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}`
         );
         const data = await response.json();
         setResults(data.data);
-      } catch (err) {
-        setError('Failed to fetch results. Please try again later.');
+      } catch (error) {
+        setError(`Failed to fetch results: ${error.message}`);
       } finally {
         setLoading(false);
       }
@@ -57,7 +57,7 @@ const SearchResultsPage = () => {
                 <Link to={`/anime/${anime.mal_id}`} className="anime-title">
                   <h3>{anime.title}</h3>
                 </Link>
-                <p className="anime-info">{anime.type} • {anime.episodes} episodes</p>
+                {/* <p className="anime-info">{anime.type} • {anime.episodes} episodes</p> */}
                 <button 
                   onClick={() => handleWatchlistToggle(anime)}
                   className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`}
