@@ -25,6 +25,7 @@
 
 .detail-image-container {
   width: 100%;
+  padding: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -36,6 +37,7 @@
 .detail-image {
   width: 100%;
   height: auto;
+  margin-bottom: 1rem;
 }
 
 .detail-info {
@@ -65,8 +67,8 @@
 .detail-stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .detail-stat {
@@ -106,4 +108,43 @@
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
+}
+
+.detail-stats-container {
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.watchlist-button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+}
+
+.watchlist-button:hover {
+  background-color: #2563eb;
+}
+
+.watchlist-button.remove {
+  background-color: #ef4444;
+}
+
+.watchlist-button.remove:hover {
+  background-color: #dc2626;
 } 

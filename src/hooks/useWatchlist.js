@@ -3,7 +3,7 @@ import { createAnimeRecord, deleteAnimeRecord, fetchWatchlist } from '../service
 /**
  * Custom hook for managing an anime watchlist with Airtable integration
  * 
- * @returns {Object} An object containing:
+ * Returns an object containing:
  *   - watchlist: Array of anime items in the watchlist
  *   - loading: Boolean indicating if data is being loaded
  *   - error: String containing error message if any
@@ -41,8 +41,8 @@ export const useWatchlist = () => {
 
   /**
    * Checks if an anime is already in the watchlist
-   * @param {number} animeId - The MAL ID of the anime to check
-   * @returns {boolean} True if anime is in watchlist, false otherwise
+   * animeId - The MAL ID of the anime to check
+   * Returns true if anime is in watchlist, false otherwise
    */
   const isInWatchlist = (animeId) => {
     return watchlist.some(item => item.mal_id === animeId);
@@ -50,8 +50,8 @@ export const useWatchlist = () => {
 
   /**
    * Toggles an anime's presence in the watchlist (add/remove)
-   * @param {Object} anime - The anime object to toggle
-   * @param {number} anime.mal_id - MyAnimeList ID of the anime
+   *  anime - The anime object to toggle
+   *  anime.mal_id - MyAnimeList ID of the anime
    * 
    * If the anime is already in the watchlist:
    * - Removes it from Airtable and local state
