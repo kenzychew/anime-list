@@ -1,0 +1,6 @@
+/* Custom styles for MUI Pagination */
+.MuiPagination-root {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+} 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useWatchlist } from '../../hooks/useWatchlist';
 import Toast from '../Toast/Toast';
 
