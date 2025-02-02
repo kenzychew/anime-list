@@ -11,6 +11,7 @@ import { createAnimeRecord, deleteAnimeRecord, fetchWatchlist } from '../service
  *   - setToast: Function to update toast message
  *   - isInWatchlist: Function to check if an anime is in watchlist
  *   - handleWatchlistToggle: Function to add/remove anime from watchlist
+ *   - clearWatchlist: Function to clear the entire watchlist
  */
 export const useWatchlist = () => {
   const [watchlist, setWatchlist] = useState([]); // Stores the list of anime
@@ -80,6 +81,24 @@ export const useWatchlist = () => {
       console.error('Watchlist update error:', err);
     }
   };
+
+  /**
+   * Clears the entire watchlist
+   * Removes all anime entries from Airtable and local state
+   */
+  const clearWatchlist = async () => {
+    try {
+      // Delete each record from Airtable
+      await Promise.all(
+        watchlist.map(anime => deleteAnimeRecord(anime.airtableId))
+      );
+      // Clear local state
+      setWatchlist([]);
+    } catch (err) {
+      setToast('Error clearing watchlist');
+      console.error('Watchlist clear error:', err);
+    }
+  };
   
   // Return the hook's state and functions for use in components
   return {
@@ -89,6 +108,7 @@ export const useWatchlist = () => {
     toast,
     setToast,
     isInWatchlist,
-    handleWatchlistToggle
+    handleWatchlistToggle,
+    clearWatchlist
   };
 }; 

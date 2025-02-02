@@ -17,7 +17,8 @@ const WatchlistPage = () => {
     error,              // Error state message
     handleWatchlistToggle,  // Function to add/remove anime from watchlist
     toast,              // Current toast message
-    setToast           // Function to update toast message
+    setToast,           // Function to update toast message
+    clearWatchlist      // Function to clear entire watchlist
   } = useWatchlist();
 
   // Show loading state while data is being fetched
@@ -36,7 +37,21 @@ const WatchlistPage = () => {
 
   return (
     <div className="search-page">
-      <h1 className="search-title">My Watchlist</h1>
+      {/* Header section with title and clear button */}
+      <div className="watchlist-header">
+        <h1 className="search-title">My Watchlist</h1>
+        {validWatchlist.length > 0 && (
+          <button 
+            onClick={() => {
+              clearWatchlist();
+              setToast('Watchlist cleared');
+            }}
+            className="clear-watchlist-button"
+          >
+            Burn It All
+          </button>
+        )}
+      </div>
       
       {/* Show message for empty watchlist */}
       {validWatchlist.length === 0 ? (

@@ -90,4 +90,36 @@
 
 .error {
   color: #ef4444;
-} 
+}
+
+/* Container for watchlist title and clear button */
+.watchlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Style for clear watchlist button */
+.clear-watchlist-button {
+  padding: 0.5rem 1rem;
+  background-color: #b91c1c;  /* Darker red than #ef4444 */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-watchlist-button:hover {
+  background-color: #991b1b;  /* Even darker red on hover */
+}
+
+/* For reference
+.watchlist-button.remove {
+  background-color: #ef4444;
+}
+.watchlist-button.remove:hover {
+  background-color: #dc2626;
+}
+*/ 
