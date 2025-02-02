@@ -1,12 +1,11 @@
 /* Layout styles */
-
 .layout {
-  min-height: 100vh;
-  min-width: 100dvw;
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;  /* Makes the layout at least as tall as the viewport height */
+  min-width: 100dvw;  /* Makes the layout at least as wide as the dynamic viewport width */
+  display: flex;      /* Makes the container a flex container */
+  flex-direction: column; /* Arranges flex items in a vertical column */
 }
 
 .layout-main {
-  flex-grow: 1;
+  flex-grow: 1; /* Allows the main content area to grow and take up any remaining space */
 }

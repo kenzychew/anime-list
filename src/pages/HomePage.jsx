@@ -6,7 +6,7 @@ import '../styles/SearchResults.css'; // Reusing the same styles
 
 const HomePage = () => {
   // State management for anime data and loading states
-  const [topAnime, setTopAnime] = useState([]); // Tracks list of top anime
+  const [results, setResults] = useState([]); // Tracks list of top anime
   const [loading, setLoading] = useState(true); // Manages loading state
   const [error, setError] = useState(null); // Handles potential errors
   
@@ -21,7 +21,7 @@ const HomePage = () => {
         setLoading(true); // Set loading state to true
         const response = await fetch('https://api.jikan.moe/v4/top/anime'); // Makes GET request to Jikan API's top anime endpoint
         const data = await response.json(); // Parses JSON response into JS object, await needed bc .json() is an async function
-        setTopAnime(data.data); // Update state with anime data, data.data bc Jikan API wraps results in a data property
+        setResults(data.data); // Update state with anime data, data.data bc Jikan API wraps results in a data property
       } catch (error) { 
         setError(`Failed to fetch top anime: ${error.message}`); // Set error state with error message, used to display error message in UI
       } finally {
@@ -43,20 +43,23 @@ const HomePage = () => {
       </h1>
       {/* Grid layout for anime cards */}
       <div className="search-results">
-        {topAnime.map((anime) => (
+        {results.map((anime) => (
           <div key={anime.mal_id} className="anime-card">
             <img
               src={anime.images.jpg.image_url}
-              alt={anime.title}
+              alt={anime.title || 'Anime Image'}
               className="anime-image"
             />
             {/* Link to detailed view */}
             <Link to={`/anime/${anime.mal_id}`} className="anime-title">
               <h3>{anime.title}</h3>
             </Link>
-            {/* <div className="anime-info">
-              <span>Score: {anime.score}</span> • <span>Rank #{anime.rank}</span>
-            </div> */}
+            <div className="anime-info">
+              <span>Score: {anime.score}</span> • <span>Popularity #{anime.popularity}</span>
+            </div>
+            <div className="anime-info">
+              <span>Rank #{anime.rank}</span> • <span>Favorites: {anime.favorites}</span>
+            </div>
             {/* Watchlist toggle button */}
             <button 
               onClick={() => handleWatchlistToggle(anime)}
