@@ -18,3 +18,5 @@ export const ThemeProvider = ({ children }) => {
 };
 // Custom hook to use the theme context
 export const useTheme = () => useContext(ThemeContext); 
+
+//? https://medium.com/@riteshbhagat/implementing-theme-in-react-using-context-api-196149967c9d

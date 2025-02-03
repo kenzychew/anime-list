@@ -84,17 +84,17 @@ const SearchResultsPage = () => {
               />
             ))}
           </div>
-          {/* Pagination section - only show if we have results */}
+          {/* Pagination - https://mui.com/material-ui/api/pagination/ */}
           {results.length > 0 && (
             <div className="pagination">
               <Pagination 
-                count={totalPages}        // Total number of pages
-                page={page}               // Current active page
-                onChange={handlePageChange} // Function to call when page changes
-                color="primary"           // Use primary theme color
-                size="large"              // Make pagination buttons larger
-                showFirstButton           // Show button to jump to first page
-                showLastButton            // Show button to jump to last page
+                count={totalPages}        
+                page={page}               
+                onChange={handlePageChange} 
+                color="primary"           
+                size="large"              
+                showFirstButton           
+                showLastButton            
               />
             </div>
           )}
