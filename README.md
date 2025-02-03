@@ -10,7 +10,6 @@ Anime List is my first React-based web application built with the objective of d
 
 ## Getting Started
 
-[Screenshot](./assets/screenshot.png)
 [Live Demo](https://anime-list-987.netlify.app/)
 
 ## Technologies Used
