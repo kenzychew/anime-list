@@ -39,10 +39,61 @@ A React-based web application for discovering, searching, and managing your anim
 
 2. **Page Components**
 
-   - HomePage: Displays top anime
-   - SearchResultsPage: Shows search results
-   - AnimeDetailPage: Shows detailed anime information
-   - WatchlistPage: Manages user's watchlist
+   **HomePage**
+
+   - Main landing page displaying top-rated anime
+   - Features:
+     - Fetches and displays a paginated list of top anime from Jikan API
+     - Shows anime in a grid layout using AnimeCard components
+     - Implements pagination using Material UI's Pagination component
+     - Allows users to add/remove anime from their watchlist
+     - Shows toast notifications for watchlist actions
+     - Displays 20 anime per page
+     - Includes loading and error states
+
+   **SearchResultsPage**
+
+   - Handles search functionality and displays search results
+   - Features:
+     - Gets search query from URL parameters
+     - Fetches matching anime from Jikan API based on search term
+     - Shows results in a grid layout similar to HomePage
+     - Includes a search bar for new searches
+     - Implements pagination for search results
+     - Shows toast notifications for watchlist actions
+     - Displays appropriate messages for empty states or errors
+     - Handles 20 results per page
+
+   **AnimeDetailPage**
+
+   - Displays detailed information about a specific anime
+   - Features:
+     - Uses URL parameters to get the anime ID
+     - Fetches comprehensive anime data from Jikan API
+     - Renders detailed information through AnimeDetail component
+     - Shows loading and error states
+     - Gets full anime details including images, stats, synopsis, and trailer
+
+   **WatchlistPage**
+
+   - Manages and displays the user's saved anime watchlist
+   - Features:
+     - Shows all anime saved to the user's watchlist
+     - Allows removal of individual anime from the watchlist
+     - Includes a "Burn It All" button to clear the entire watchlist
+     - Uses Link components for navigation to detail pages
+     - Shows toast notifications for watchlist actions
+     - Displays appropriate messages for empty watchlist
+     - Includes validation to filter out invalid entries
+
+   **Common Patterns Across Components**
+
+   - All components handle loading and error states
+   - Share similar styling through imported CSS files
+   - Use toast notifications for user feedback
+   - Follow React best practices with hooks (useState, useEffect)
+   - Interact with Jikan API for anime data
+   - Integrate with watchlist system for user interaction
 
 3. **Feature Components**
    - AnimeCard: Reusable card component for anime display
