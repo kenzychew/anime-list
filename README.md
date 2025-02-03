@@ -143,14 +143,49 @@ Create a `.env` file with the following variables:
 
 ## Project Structure
 
-src/
-├── components/ # Reusable components
-├── context/ # React Context providers
-├── hooks/ # Custom React hooks
-├── pages/ # Page components
-├── services/ # API services
-├── styles/ # CSS files
-└── main.jsx # App entry point
+├── src/
+│ ├── components/
+│ │ ├── AnimeCard/
+│ │ │ └── AnimeCard.jsx
+│ │ ├── AnimeDetail/
+│ │ │ ├── AnimeDetail.jsx
+│ │ │ └── AnimeDetail.css
+│ │ ├── Button/
+│ │ │ ├── ThemeButton.jsx
+│ │ │ └── ThemeButton.css
+│ │ ├── Layout/
+│ │ │ ├── Footer.jsx
+│ │ │ ├── Layout.jsx
+│ │ │ ├── Navbar.jsx
+│ │ │ └── SearchBar.jsx
+│ │ └── Toast/
+│ │ └── Toast.jsx
+│ ├── context/
+│ │ └── ThemeContext.jsx
+│ ├── hooks/
+│ │ └── useWatchlist.js
+│ ├── pages/
+│ │ ├── AnimeDetailPage.jsx
+│ │ ├── HomePage.jsx
+│ │ ├── SearchResultsPage.jsx
+│ │ └── WatchlistPage.jsx
+│ ├── services/
+│ │ └── airtable.js
+│ ├── styles/
+│ │ ├── AnimeDetail.css
+│ │ ├── Layout.css
+│ │ ├── MuiPagination.css
+│ │ ├── Navbar.css
+│ │ ├── SearchBar.css
+│ │ ├── SearchResults.css
+│ │ ├── theme.css
+│ │ └── Toast.css
+│ └── main.jsx
+├── .env.example
+├── .gitignore
+├── index.html
+├── package.json
+└── README.md
 
 ## Airtable Setup
 
