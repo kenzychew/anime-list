@@ -16,3 +16,5 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+
+//? https://chrisdevcode.hashnode.dev/how-to-create-a-layout-component-react

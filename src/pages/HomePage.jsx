@@ -45,7 +45,7 @@ const HomePage = () => {
   // event: The event that triggered the change
   // value: The new page number
   const handlePageChange = (event, value) => {
-    setPage(value);                // Update current page
+    setPage(value);                // Update current page state
     window.scrollTo(0, 0);         // Scroll back to top of page
   };
 
