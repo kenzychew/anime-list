@@ -172,3 +172,7 @@ src/
 - Implement filters for the top anime list
 - Add a recommendation system
 - Integrate with more anime databases
+
+## Attributions
+
+- TODO
