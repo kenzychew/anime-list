@@ -128,7 +128,7 @@ const HomePage = () => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl> {/* https://mui.com/material-ui/api/form-control/ */}
+          </FormControl>
           <FormControl sx={{ minWidth: 200 }}>
             <InputLabel id="genre-select-label">Genre</InputLabel>
             <Select
@@ -178,3 +178,9 @@ const HomePage = () => {
 export default HomePage;
 
 // https://mui.com/material-ui/api/pagination/
+// https://mui.com/material-ui/api/form-control/
+// https://mui.com/material-ui/api/select/
+// https://mui.com/material-ui/api/input-label/
+// https://mui.com/material-ui/api/menu-item/
+
+
