@@ -3,10 +3,18 @@ const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
 const TABLE_NAME = 'Watchlist';
 const API_URL = 'https://api.airtable.com/v0';
 
+/**
+ * Creates a new anime record in Airtable
+ * Data flow: Component -> useWatchlist hook -> createAnimeRecord -> Airtable API
+ * 
+ * Takes in an anime object from the Jikan API
+ * Returns the created record with the Airtable ID
+ */
 const createAnimeRecord = async (anime) => {
   try {
     console.log('Creating anime record:', anime);
 
+    // Transform Jikan API data structure to match Airtable schema
     const fields = {
       mal_id: Number(anime.mal_id),
       title: anime.title,
@@ -20,6 +28,7 @@ const createAnimeRecord = async (anime) => {
 
     console.log('Sending fields to Airtable:', fields);
 
+    // Make POST request to Airtable API
     const response = await fetch(`${API_URL}/${AIRTABLE_BASE_ID}/${TABLE_NAME}`, {
       method: 'POST',
       headers: {
@@ -29,12 +38,14 @@ const createAnimeRecord = async (anime) => {
       body: JSON.stringify({ fields })
     });
 
+    // Handle API errors
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Airtable API Error:', errorData);
       throw new Error(`Airtable API error: ${errorData.error?.message || 'Unknown error'}`);
     }
 
+    // Return created record with Airtable ID
     const data = await response.json();
     console.log('Airtable response:', data);
     return { ...anime, airtableId: data.id };
@@ -44,8 +55,16 @@ const createAnimeRecord = async (anime) => {
   }
 };
 
+/**
+ * Deletes an anime record from Airtable
+ * Data flow: Component -> useWatchlist hook -> deleteAnimeRecord -> Airtable API
+ * 
+ * Takes in an Airtable ID
+ * Returns the deleted record
+ */
 const deleteAnimeRecord = async (airtableId) => {
   try {
+    // Make DELETE request to Airtable API
     const response = await fetch(`${API_URL}/${AIRTABLE_BASE_ID}/${TABLE_NAME}/${airtableId}`, {
       method: 'DELETE',
       headers: {
@@ -53,6 +72,7 @@ const deleteAnimeRecord = async (airtableId) => {
       }
     });
 
+    // Handle API errors
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Airtable API Error:', errorData);
@@ -64,8 +84,15 @@ const deleteAnimeRecord = async (airtableId) => {
   }
 };
 
+/**
+ * Fetches all anime records from Airtable
+ * Data flow: Component -> useWatchlist hook -> fetchWatchlist -> Airtable API
+ * 
+ * Returns an array of anime records
+ */
 const fetchWatchlist = async () => {
   try {
+    // Make GET request to Airtable API
     const response = await fetch(
       `${API_URL}/${AIRTABLE_BASE_ID}/${TABLE_NAME}`,
       {
@@ -75,12 +102,14 @@ const fetchWatchlist = async () => {
       }
     );
 
+    // Handle API errors
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Airtable API Error:', errorData);
       throw new Error(`Airtable API error: ${errorData.error?.message || 'Unknown error'}`);
     }
 
+    // Transform Airtable data structure to match app's expected format
     const data = await response.json();
     return data.records.map(record => ({
       ...record.fields,
