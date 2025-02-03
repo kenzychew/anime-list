@@ -36,7 +36,6 @@ const genres = [
 const sortOptions = [
   { value: 'score', label: 'Score (Default)' },
   { value: 'popularity', label: 'Popularity' },
-  { value: 'rank', label: 'Ranking' },
   { value: 'favorites', label: 'Favorites' }
 ];
 
@@ -63,8 +62,8 @@ const HomePage = () => {
         setLoading(true); // Set loading state to true
         // Modify URL to include genre filter if a genre is selected
         const genreParam = selectedGenre !== 0 ? `&genres=${selectedGenre}` : '';
-        // Determine sort order based on selected sort option
-        const sortOrder = ['rank', 'popularity'].includes(selectedSort) ? 'asc' : 'desc';
+        // Only use ascending order for popularity
+        const sortOrder = selectedSort === 'popularity' ? 'asc' : 'desc';
         
         const response = await fetch(
           `https://api.jikan.moe/v4/anime?page=${page}&limit=20${genreParam}&order_by=${selectedSort}&sort=${sortOrder}`
