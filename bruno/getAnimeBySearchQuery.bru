@@ -5,12 +5,11 @@ meta {
 }
 
 get {
-  url: https://api.jikan.moe/v4/anime?q=${(query)}
+  url: https://api.jikan.moe/v4/anime?q=naruto
   body: none
   auth: none
 }
 
 params:query {
-  q: ${encodeURIComponent(query)}
-  sfw: true
+  q: naruto
 }
