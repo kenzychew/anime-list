@@ -52,7 +52,7 @@ export const useWatchlist = () => {
   /**
    * Toggles an anime's presence in the watchlist (add/remove)
    *  anime - The anime object to toggle
-   *  anime.mal_id - MyAnimeList ID of the anime
+   *  anime.mal_id - MAL ID of the anime
    * 
    * If the anime is already in the watchlist:
    * - Removes it from Airtable and local state

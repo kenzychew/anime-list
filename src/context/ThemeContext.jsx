@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from 'react';
 // Creates React Context for theme-related data
 const ThemeContext = createContext();
-// Maintains the state of the theme and provides a function to toggle it, App.jsx wraps children in ThemeProvider
+// ThemeProvider component maintains the state of the theme using useState and provides a function toggleTheme, App.jsx wraps children in ThemeProvider
 export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false); // False = Light Mode
 
