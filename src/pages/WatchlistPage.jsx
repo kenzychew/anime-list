@@ -48,7 +48,7 @@ const WatchlistPage = () => {
             }}
             className="clear-watchlist-button"
           >
-            Burn It All
+            Clear Watchlist
           </button>
         )}
       </div>

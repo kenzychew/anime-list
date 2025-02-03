@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createAnimeRecord, deleteAnimeRecord, fetchWatchlist } from '../services/airtable';
+import { createAnimeRecord, deleteAnimeRecord, fetchWatchlist } from '../services/services';
 /**
  * Custom hook for managing an anime watchlist with Airtable integration
  * 

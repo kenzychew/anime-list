@@ -2,6 +2,41 @@
 
 A React-based web application for discovering, searching, and managing your anime watchlist. Built with Vite, React, and integrated with the Jikan API and Airtable for data persistence.
 
+## User Stories
+
+### Browsing
+
+- As a user, I want to see a list of top-rated anime on the home page
+- As a user, I want to browse through multiple pages of anime listings
+- As a user, I want to see basic information like score and rank for each anime
+
+### Search
+
+- As a user, I want to search for specific anime titles
+- As a user, I want to navigate through multiple pages of search results
+
+### Detailed Information
+
+- As a user, I want to click on an anime to see more details
+- As a user, I want to see comprehensive information about each anime
+- As a user, I want to view trailers when available
+- As a user, I want to see production details like studios and producers
+
+### Watchlist Management
+
+- As a user, I want to add anime to my watchlist
+- As a user, I want to remove anime from my watchlist
+- As a user, I want to see my entire watchlist in one place
+- As a user, I want to clear my entire watchlist if needed
+
+### User Interface
+
+- As a user, I want to switch between light and dark modes
+- As a user, I want to see loading states while content is fetching
+- As a user, I want to see error messages if something goes wrong
+- As a user, I want the site to be responsive on different devices
+- As a user, I want to receive toast notifications for my actions
+
 ## Features
 
 - **Browse Top Anime**: View a curated list of top-rated anime with pagination

@@ -58,10 +58,7 @@ export const AnimeDetail = ({ anime }) => {
           {/* Main information section */}
           <div className="detail-info">
             {/* Title section - Shows both original and English titles if different */}
-            <h1 className="detail-title">{anime.title}</h1>
-            {anime.title_english && anime.title_english !== anime.title && (
-              <h2 className="detail-english-title">{anime.title_english}</h2>
-            )}
+            <h1 className="detail-title">{anime.title_english || anime.title}</h1>
 
             {/* Synopsis section */}
             <div className="detail-section">
