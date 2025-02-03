@@ -35,7 +35,9 @@ const SearchResultsPage = () => {
           `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&page=${page}&limit=20`
         );
         const data = await response.json(); // Parse the JSON response
-        setResults(data.data); // Update the results state with data property of the response object
+        // Filter out anime with popularity #0
+        const filteredData = data.data.filter(anime => anime.popularity !== 0);
+        setResults(filteredData); // Update the results state with data property of the response object
         // Calculate total pages from API response
         setTotalPages(Math.ceil(data.pagination.items.total / 20));
       } catch (error) {
