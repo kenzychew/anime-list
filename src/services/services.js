@@ -119,10 +119,10 @@ const fetchWatchlist = async () => {
     // Transform Airtable data structure to match app's expected format
     const data = await response.json();
     return data.records.map(record => ({
-      ...record.fields,
-      airtableId: record.id,
-      mal_id: parseInt(record.fields.mal_id),
-      images: {
+      ...record.fields, //? Spreads all fields from Airtable record
+      airtableId: record.id, //? Add Airtable's record ID to the object
+      mal_id: parseInt(record.fields.mal_id), //? Convert mal_id to integer
+      images: { //? Restructure image data to match app's expected format
         jpg: {
           image_url: record.fields.image_url
         }
@@ -134,4 +134,28 @@ const fetchWatchlist = async () => {
   }
 };
 
-export { createAnimeRecord, deleteAnimeRecord, fetchWatchlist }; 
+export { createAnimeRecord, deleteAnimeRecord, fetchWatchlist };
+
+//? Airtable Data:
+// {
+//   records: [{
+//       id: "rec123",
+//       fields: {
+//           mal_id: "1",
+//           title: "Anime A",
+//           image_url: "http://..."
+//       }
+//   }]
+// }
+
+//? Transformed Data:
+// [{
+//   mal_id: 1,                    // Num instead of str
+//   title: "Anime A",             // Original field
+//   airtableId: "rec123",        // Added from record.id
+//   images: {                     // Restructured image data
+//       jpg: {
+//           image_url: "http://..."
+//       }
+//   }
+// }]

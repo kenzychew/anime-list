@@ -36,9 +36,9 @@ export const useWatchlist = () => {
     return watchlist.some(item => item.mal_id === mal_id); //? Returns true if item with matching mal_id is found
   };
 
-  //* This function has two flows: 
-  //  1. Remove (Delete from Airtable and filter from local state)
-  //  2. Add (create new record in Airtable and add to local state)
+  //* This function maintains sync between Airtable and local state and has 2 flows:
+  //*  1. Remove (Delete from Airtable and filter from local state)
+  //*  2. Add (create new record in Airtable and add to local state)
   const handleWatchlistToggle = async (anime) => {
     try { // Checks if anime is already in watchlist
       if (isInWatchlist(anime.mal_id)) {
@@ -68,17 +68,18 @@ export const useWatchlist = () => {
    */
   const clearWatchlist = async () => {
     try {
-      // Delete each record from Airtable
-      await Promise.all(
-        watchlist.map(anime => deleteAnimeRecord(anime.airtableId))
+      // Waits for all delete promises to complete
+      await Promise.all( //? Promise.all runs all delete promises in parallel, waits for all deletes to finish before continuing
+        watchlist.map(anime => deleteAnimeRecord(anime.airtableId)) //? Creates array of delete promises
       );
-      // Clear local state
+      // Clear local state only after all deletes are complete
       setWatchlist([]);
     } catch (err) {
       setToast('Error clearing watchlist');
       console.error('Watchlist clear error:', err);
     }
   };
+  
   
   // Return the hook's state and functions for use in components
   return {
@@ -91,4 +92,4 @@ export const useWatchlist = () => {
     handleWatchlistToggle, // Function that adds/removes anime from watchlist by making API calls to Airtable
     clearWatchlist // Function to clear the entire watchlist
   };
-}; 
+};
