@@ -10,7 +10,7 @@ import WatchlistPage from "./pages/WatchlistPage";
 const App = () => {
   return (
     <ThemeProvider>
-      <Layout>/
+      <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchResultsPage />} />

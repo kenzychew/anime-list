@@ -84,9 +84,7 @@ const HomePage = () => {
     fetchTopAnime();
   }, [page, selectedGenre, selectedSort]); // Add selectedGenre and selectedSort to dependencies
 
-  // Handle page change from MUI Pagination component
-  // event: The event that triggered the change
-  // value: The new page number
+
   const handlePageChange = (event, value) => {
     setPage(value);                // Update current page state
   };
@@ -130,10 +128,11 @@ const HomePage = () => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> {/* https://mui.com/material-ui/api/form-control/ */}
           <FormControl sx={{ minWidth: 200 }}>
             <InputLabel id="genre-select-label">Genre</InputLabel>
             <Select
+
               labelId="genre-select-label"
               id="genre-select"
               value={selectedGenre}
@@ -161,13 +160,13 @@ const HomePage = () => {
       </div>
       <div className="pagination">
         <Pagination 
-          count={totalPages}        // Total number of pages
-          page={page}              // Current active page
-          onChange={handlePageChange} // Function to call when page changes
-          color="primary"          // Use primary theme color
-          size="large"             // Make pagination buttons larger
-          showFirstButton          // Show button to jump to first page
-          showLastButton           // Show button to jump to last page
+          count={totalPages}        
+          page={page}              
+          onChange={handlePageChange} 
+          color="primary"          
+          size="large"             
+          showFirstButton          
+          showLastButton           
         />
       </div>
       {/* Toast notification */}
@@ -177,3 +176,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+// https://mui.com/material-ui/api/pagination/
