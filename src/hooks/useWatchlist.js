@@ -3,18 +3,9 @@ import { createAnimeRecord, deleteAnimeRecord, fetchWatchlist } from '../service
 /**
  * Custom hook for managing an anime watchlist with Airtable integration
  * 
- * Returns an object containing:
- *   - watchlist: Array of anime items in the watchlist
- *   - loading: Boolean indicating if data is being loaded
- *   - error: String containing error message if any
- *   - toast: String containing notification message
- *   - setToast: Function to update toast message
- *   - isInWatchlist: Function to check if an anime is in watchlist
- *   - handleWatchlistToggle: Function to add/remove anime from watchlist
- *   - clearWatchlist: Function to clear the entire watchlist
  */
 export const useWatchlist = () => {
-  const [watchlist, setWatchlist] = useState([]); // Stores the list of anime
+  const [watchlist, setWatchlist] = useState([]); // Array of anime objects in watchlist
   const [loading, setLoading] = useState(true); // Loading state indicator
   const [error, setError] = useState(null); // Error state management
   const [toast, setToast] = useState(null); // Notification message state
@@ -40,39 +31,28 @@ export const useWatchlist = () => {
     }
   };
 
-  /**
-   * Checks if an anime is already in the watchlist
-   * animeId - The MAL ID of the anime to check
-   * Returns true if anime is in watchlist, false otherwise
-   */
-  const isInWatchlist = (animeId) => {
-    return watchlist.some(item => item.mal_id === animeId);
+  // Helper function to check the watchlist array
+  const isInWatchlist = (mal_id) => {
+    return watchlist.some(item => item.mal_id === mal_id); //? Returns true if item with matching mal_id is found
   };
 
-  /**
-   * Toggles an anime's presence in the watchlist (add/remove)
-   *  anime - The anime object to toggle
-   *  anime.mal_id - MAL ID of the anime
-   * 
-   * If the anime is already in the watchlist:
-   * - Removes it from Airtable and local state
-   * - Shows "Removed from Watchlist" toast
-   * 
-   * If the anime is not in the watchlist:
-   * - Adds it to Airtable and local state
-   * - Shows "Added to Watchlist" toast
-   */
+  //* This function has two flows: 
+  //  1. Remove (Delete from Airtable and filter from local state)
+  //  2. Add (create new record in Airtable and add to local state)
   const handleWatchlistToggle = async (anime) => {
-    try {
+    try { // Checks if anime is already in watchlist
       if (isInWatchlist(anime.mal_id)) {
-        // Remove the anime from the watchlist
-        const recordToDelete = watchlist.find(item => item.mal_id === anime.mal_id);
+        // Find record to delete
+        const recordToDelete = watchlist.find(item => item.mal_id === anime.mal_id); //? Returns first anime object in watchlist with matching mal_id
+        // Delete from Airtable database
         await deleteAnimeRecord(recordToDelete.airtableId);
-        setWatchlist(watchlist.filter(item => item.mal_id !== anime.mal_id));
+        // Update local watchlist state
+        setWatchlist(watchlist.filter(item => item.mal_id !== anime.mal_id)); //? Filters out deleted items
         setToast('Removed from Watchlist');
       } else {
-        // Add the anime to the watchlist
+        // Create new record in Airtable
         const newRecord = await createAnimeRecord(anime);
+        // Update local state by adding anime object to watchlist
         setWatchlist([...watchlist, newRecord]);
         setToast('Added to Watchlist');
       }
@@ -102,13 +82,13 @@ export const useWatchlist = () => {
   
   // Return the hook's state and functions for use in components
   return {
-    watchlist,
-    loading,
-    error,
-    toast,
-    setToast,
-    isInWatchlist,
-    handleWatchlistToggle,
-    clearWatchlist
+    watchlist, // Watchlist array containing anime objects
+    loading, // Boolean indicating if data is being loaded
+    error, // String containing error message if any
+    toast, // String containing notification message
+    setToast, // Function to update toast message
+    isInWatchlist, // Helper function to check if anime is in watchlist
+    handleWatchlistToggle, // Function that adds/removes anime from watchlist by making API calls to Airtable
+    clearWatchlist // Function to clear the entire watchlist
   };
 }; 

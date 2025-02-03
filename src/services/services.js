@@ -1,8 +1,7 @@
 /**
  * Airtable Integration Module
- * Handles CRUD operations for anime records in an Airtable database.
- * This module provides functions to create, delete, and fetch anime records
- * from a specified Airtable base.
+ * Handles CRD operations for anime records in an Airtable database.
+ * This module provides functions to create, delete, and fetch anime records from the Airtable.
  */
 
 // Environment variables for Airtable configuration
@@ -70,7 +69,7 @@ const createAnimeRecord = async (anime) => {
  * Takes in an Airtable ID
  * Returns the deleted record
  */
-const deleteAnimeRecord = async (airtableId) => {
+const deleteAnimeRecord = async (airtableId) => { // Takes in airtableId of the record to delete
   try {
     // Make DELETE request to Airtable API
     const response = await fetch(`${API_URL}/${AIRTABLE_BASE_ID}/${TABLE_NAME}/${airtableId}`, {

@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import Toast from '../components/Toast/Toast';
-import AnimeCard from '../components/AnimeCard/AnimeCard';
+import { Link } from 'react-router-dom';
 import { useWatchlist } from '../hooks/useWatchlist';
 import '../styles/SearchResults.css';
 import '../styles/MuiPagination.css';  // Import the new CSS file
@@ -45,8 +45,13 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true); // Manages loading state
   const [error, setError] = useState(null); // Handles potential errors
   
-  // Custom hook for toast notifications when adding or removing anime from watchlist
-  const { toast, setToast } = useWatchlist();
+  // Destructuring to extract specific functions/state from useWatchlist hook
+  const { 
+    toast, // State variable that holds current toast message (null or string)
+    setToast, 
+    isInWatchlist, // Helper function to check if anime is in watchlist (isInWatchlist(anime.mal_id) returns true or false)
+    handleWatchlistToggle // Function that adds/removes anime from watchlist by making API calls to Airtable
+  } = useWatchlist();
 
   // Pagination state
   const [page, setPage] = useState(1);              // Current page number
@@ -87,10 +92,6 @@ const HomePage = () => {
 
   const handlePageChange = (event, value) => {
     setPage(value);                // Update current page state
-  };
-
-  const handleWatchlistUpdate = (action) => {
-    setToast(action === 'add' ? 'Added to Watchlist' : 'Removed from Watchlist');
   };
 
   // Handle genre change
@@ -148,14 +149,34 @@ const HomePage = () => {
           </FormControl>
         </div>
       </div>
-      {/* Grid layout for anime cards */}
       <div className="search-results">
         {results.map((anime) => (
-          <AnimeCard 
-            key={anime.mal_id} 
-            anime={anime} 
-            onWatchlistUpdate={handleWatchlistUpdate}
-          />
+          <div key={anime.mal_id} className="anime-card">
+            <img
+              src={anime.images?.jpg?.image_url}
+              alt={anime.title || 'Anime Image'}
+              className="anime-image"
+            />
+            <Link to={`/anime/${anime.mal_id}`} className="anime-title">
+              <h3>{anime.title}</h3>
+            </Link>
+            <div className="anime-info">
+              <span>Score: {anime.score}</span> • <span>Popularity #{anime.popularity}</span>
+            </div>
+            <div className="anime-info">
+              <span>Rank #{anime.rank}</span> • <span>Favorites: {anime.favorites}</span>
+            </div>
+            <button // This button handles asynchronous operations with Airtable
+              onClick={async () => { // Event handler for checking anime is already in watchlist
+                const action = isInWatchlist(anime.mal_id) ? 'remove' : 'add'; // Sets action to 'remove' or 'add' based on current state
+                await handleWatchlistToggle(anime); // Calls handleWatchlistToggle to update Airtable database
+                setToast(action === 'add' ? 'Added to Watchlist' : 'Removed from Watchlist'); // Sets toast message based on action
+              }}
+              className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`} // Dynamic styling by adding remove class if anime is in watchlist
+            > 
+              {isInWatchlist(anime.mal_id) ? 'Remove from Watchlist' : 'Add to Watchlist' /*Dynamic text based on watchlist state*/} 
+            </button>
+          </div>
         ))}
       </div>
       <div className="pagination">

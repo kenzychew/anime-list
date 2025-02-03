@@ -3,10 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination'; // Import MUI Pagination component
 import SearchBar from '../components/SearchBar/SearchBar';
 import Toast from '../components/Toast/Toast';
-import AnimeCard from '../components/AnimeCard/AnimeCard';
-import { useWatchlist } from '../hooks/useWatchlist';
+import { Link } from 'react-router-dom';
 import '../styles/SearchResults.css';
 import '../styles/MuiPagination.css'; // Import pagination styles
+import { useWatchlist } from '../hooks/useWatchlist';
 
 // SearchResultsPage component that handles display and functionality of anime search results
 const SearchResultsPage = () => {
@@ -18,7 +18,7 @@ const SearchResultsPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // Custom hook for managing watchlist functionality
-  const { toast, setToast } = useWatchlist();
+  const { toast, setToast, isInWatchlist, handleWatchlistToggle } = useWatchlist();
   // Pagination state
   const [page, setPage] = useState(1);              // Current page number
   const [totalPages, setTotalPages] = useState(0);  // Total number of pages available
@@ -55,10 +55,6 @@ const SearchResultsPage = () => {
     setPage(value);                // Update current page
   };
 
-  const handleWatchlistUpdate = (action) => {
-    setToast(action === 'add' ? 'Added to Watchlist' : 'Removed from Watchlist');
-  };
-
   return (
     <div className="search-page">
       {/* Search bar component for new searches */}
@@ -75,13 +71,33 @@ const SearchResultsPage = () => {
         <>
           <h2 className="search-title">Search Results for: {query}</h2>
           <div className="search-results">
-            {/* Map through the results and display each anime card */}
             {results.map((anime) => (
-              <AnimeCard 
-                key={anime.mal_id} 
-                anime={anime} 
-                onWatchlistUpdate={handleWatchlistUpdate}
-              />
+              <div key={anime.mal_id} className="anime-card">
+                <img
+                  src={anime.images?.jpg?.image_url}
+                  alt={anime.title || 'Anime Image'}
+                  className="anime-image"
+                />
+                <Link to={`/anime/${anime.mal_id}`} className="anime-title">
+                  <h3>{anime.title}</h3>
+                </Link>
+                <div className="anime-info">
+                  <span>Score: {anime.score}</span> • <span>Popularity #{anime.popularity}</span>
+                </div>
+                <div className="anime-info">
+                  <span>Rank #{anime.rank}</span> • <span>Favorites: {anime.favorites}</span>
+                </div>
+                <button 
+                  onClick={async () => {
+                    const action = isInWatchlist(anime.mal_id) ? 'remove' : 'add';
+                    await handleWatchlistToggle(anime);
+                    setToast(action === 'add' ? 'Added to Watchlist' : 'Removed from Watchlist');
+                  }}
+                  className={`watchlist-button ${isInWatchlist(anime.mal_id) ? 'remove' : ''}`}
+                >
+                  {isInWatchlist(anime.mal_id) ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                </button>
+              </div>
             ))}
           </div>
           {/* Pagination - https://mui.com/material-ui/api/pagination/ */}
