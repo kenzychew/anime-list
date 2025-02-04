@@ -10,6 +10,22 @@ Anime List is my first React-based web application built with the objective of d
 
 ## Getting Started
 
+## MVP
+
+The minimum requirements for the App is as follows (technical requirements for 1.1 below):
+
+5 components
+4 props
+2 useState
+2 React router routes
+1 lifting state
+
+## User Stories
+
+As a user, I want to browse anime titles on the landing page.
+As a user, I want to be able to filter anime by genre and sort by popular.
+As a user, I want to be able to view detailed information about an anime by clicking on the anime card
+
 [Screenshot](screenshot.png)
 [Live Demo](https://anime-list-987.netlify.app/)
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'; // Add useParams and useNavigate
 import Pagination from '@mui/material/Pagination'; // Import Material UI's Pagination component
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -40,6 +41,9 @@ const sortOptions = [
 ];
 
 const HomePage = () => {
+  const { name } = useParams(); // Get genre name from URL
+  const navigate = useNavigate(); // For URL navigation
+  
   // Initialize state variables using useState hook
   const [results, setResults] = useState([]); // Stores list of top anime
   const [loading, setLoading] = useState(true); // Manages loading state
@@ -89,15 +93,33 @@ const HomePage = () => {
     fetchTopAnime();
   }, [page, selectedGenre, selectedSort]); // Add selectedGenre and selectedSort to dependencies
 
+  // Update URL when genre changes
+  const handleGenreChange = (event) => {
+    const genreId = event.target.value;
+    setSelectedGenre(genreId);
+    setPage(1);
+    
+    // Find genre name and update URL
+    if (genreId === 0) {
+      navigate('/'); // Remove genre from URL if "All Genres"
+    } else {
+      const selectedGenre = genres.find(g => g.id === genreId);
+      navigate(`/genre/${selectedGenre.name}`);
+    }
+  };
+
+  // Set selected genre based on URL
+  useEffect(() => {
+    if (name) {
+      const genre = genres.find(g => g.name.toLowerCase() === name.toLowerCase());
+      if (genre) {
+        setSelectedGenre(genre.id);
+      }
+    }
+  }, [name]); // Run when URL genre changes
 
   const handlePageChange = (event, value) => {
     setPage(value);                // Update current page state
-  };
-
-  // Handle genre change
-  const handleGenreChange = (event) => {
-    setSelectedGenre(event.target.value);
-    setPage(1); // Reset to first page when genre changes
   };
 
   const handleSortChange = (event) => {
