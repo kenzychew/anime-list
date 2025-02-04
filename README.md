@@ -37,6 +37,16 @@ Anime List is my first React-based web application built with the objective of d
 
 ## Technical Overview
 
+### File Organization
+
+src/
+components/ # Reusable UI components
+context/ # Theme context
+hooks/ # Custom hooks (useWatchlist)
+pages/ # Route components
+services/ # API integration
+styles/ # CSS files
+
 ### Key Components
 
 1. **Layout Components**
