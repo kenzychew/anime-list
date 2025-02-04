@@ -23,8 +23,13 @@ The minimum requirements for the App is as follows (technical requirements for 1
 ## User Stories
 
 As a user, I want to browse anime titles on the landing page.
-As a user, I want to be able to filter anime by genre and sort by popular.
-As a user, I want to be able to view detailed information about an anime by clicking on the anime card
+As a user, I want to be able to filter anime by genre and sort by popularity.
+As a user, i want to be able to search for my favourite anime.
+As a user, I want to be able to view detailed information about an anime by clicking on the anime card.
+As a user, I want to be able to add anime to a watchlist to view later.
+As a user, I want to be able to remove anime from my watchlist.
+As a user, I want to be able to clear all the anime in my watchlist.
+As a user, I want to be able to toggle between light and dark mode.
 
 [Screenshot](screenshot.png)
 [Live Demo](https://anime-list-987.netlify.app/)
