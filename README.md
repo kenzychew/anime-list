@@ -4,15 +4,13 @@
 
 ![Anime List App Screenshot](screenshot.png)
 
-## Description
-
-Anime List is my first React-based web application built with the objective of discovering, searching, and managing an anime watchlist. Users can browse top-rated anime, search for specific titles, view detailed information, and maintain a personal watchlist. Built with Vite and React, it integrates with the Jikan API for anime data and Airtable for persistent watchlist storage.
-
-## Getting Started
-
 ## Live URL
 
 [anime-list-987.netlify.app](https://anime-list-987.netlify.app/)
+
+## Description
+
+Anime List is my first React-based web application built with the objective of discovering, searching, and managing an anime watchlist. Users can browse top-rated anime, search for specific titles, view detailed information, and maintain a personal watchlist. Built with Vite and React, it integrates with the Jikan API for anime data and Airtable for persistent watchlist storage.
 
 ## MVP
 
