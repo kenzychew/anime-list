@@ -10,6 +10,10 @@ Anime List is my first React-based web application built with the objective of d
 
 ## Getting Started
 
+## Live URL
+
+[anime-list-987.netlify.app](https://anime-list-987.netlify.app/)
+
 ## MVP
 
 The minimum requirements for the App is as follows (technical requirements for 1.1 below):
@@ -32,7 +36,6 @@ As a user, I want to be able to clear all the anime in my watchlist.
 As a user, I want to be able to toggle between light and dark mode.
 
 [Screenshot](screenshot.png)
-[Live Demo](https://anime-list-987.netlify.app/)
 
 ## Technologies Used
 
